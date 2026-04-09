@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Português em Foco — B1.2 → B2</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PT Foco">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0e5c35">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #0e5c35;
+    --verde-mid: #1a7a4a;
+    --verde-light: #d4ede0;
+    --vermelho: #b83232;
+    --dourado: #c8892a;
+    --dourado-light: #f5e9d4;
+    --creme: #f8f5f0;
+    --creme-dark: #ede9e2;
+    --escuro: #1a1a18;
+    --cinza: #6b6860;
+    --cinza-light: #e8e5e0;
+    --branco: #fdfcfa;
+    --radius: 10px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--creme);
+    color: var(--escuro);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--verde);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 58px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    border-bottom: 3px solid var(--dourado);
+  }
+  .header-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.3px;
+    flex: 1;
+  }
+  .header-logo span { color: var(--dourado); font-style: italic; }
+  .header-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.9);
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .xp-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+  }
+  .xp-bar { width: 72px; height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; }
+  .xp-fill { height: 100%; background: var(--dourado); border-radius: 3px; transition: width 0.6s ease; }
+
+  /* ── NAV ── */
+  .nav {
+    display: flex;
+    background: var(--branco);
+    border-bottom: 1px solid var(--cinza-light);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 11px 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cinza);
+    border: none;
+    background: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-btn .icon { font-size: 15px; }
+  .nav-btn:hover { color: var(--escuro); background: var(--creme); }
+  .nav-btn.active { color: var(--verde); border-bottom-color: var(--verde); }
+
+  /* ── MAIN ── */
+  .main { max-width: 720px; margin: 0 auto; padding: 24px 16px 60px; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--verde);
+    margin-bottom: 4px;
+  }
+  .section-sub { font-size: 13px; color: var(--cinza); margin-bottom: 20px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--branco);
+    border: 1px solid var(--cinza-light);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .card-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card-icon.verde { background: var(--verde-light); }
+  .card-icon.dourado { background: var(--dourado-light); }
+  .card-icon.vermelho { background: #fde8e8; }
+  .card-title { font-size: 16px; font-weight: 600; color: var(--escuro); margin-bottom: 2px; }
+  .card-meta { font-size: 12px; color: var(--cinza); }
+
+  /* ── UNIDADE LIST ── */
+  .unidade-grid { display: flex; flex-direction: column; gap: 10px; }
+  .unidade-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--branco);
+    border: 1px solid var(--cinza-light);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    width: 100%;
+    font-family: 'Outfit', sans-serif;
+  }
+  .unidade-item:hover { border-color: var(--verde); background: var(--verde-light); transform: translateX(3px); }
+  .unidade-item.current { border-color: var(--verde); border-left: 4px solid var(--verde); }
+  .unidade-item.locked { opacity: 0.45; cursor: not-allowed; }
+  .unidade-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .unidade-num.done { background: var(--verde); color: white; }
+  .unidade-num.current { background: var(--dourado); color: white; }
+  .unidade-num.upcoming { background: var(--cinza-light); color: var(--cinza); }
+  .unidade-info { flex: 1; }
+  .unidade-name { font-size: 14px; font-weight: 600; color: var(--escuro); }
+  .unidade-topics { font-size: 11px; color: var(--cinza); margin-top: 2px; }
+  .unidade-level {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .level-b1 { background: #e0f0ff; color: #1a5fa0; }
+  .level-b12 { background: var(--dourado-light); color: #8a5a00; }
+  .level-b2 { background: #ffe0e8; color: #8a001a; }
+
+  /* ── EXERCISE ENGINE ── */
+  .exercise-wrap { }
+  .ex-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .ex-progress-bar { flex: 1; height: 6px; background: var(--cinza-light); border-radius: 3px; overflow: hidden; }
+  .ex-progress-fill { height: 100%; background: var(--verde); border-radius: 3px; transition: width 0.4s; }
+  .ex-counter { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--cinza); }
+
+  .ex-card {
+    background: var(--branco);
+    border: 1px solid var(--cinza-light);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+  }
+  .ex-type-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--dourado-light);
+    color: var(--dourado);
+    margin-bottom: 14px;
+  }
+  .ex-question {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--escuro);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .ex-hint { font-size: 13px; color: var(--cinza); margin-bottom: 18px; font-style: italic; }
+  .ex-sentence {
+    font-size: 16px;
+    color: var(--escuro);
+    margin-bottom: 18px;
+    line-height: 1.7;
+    padding: 12px 16px;
+    background: var(--creme);
+    border-radius: 8px;
+    border-left: 3px solid var(--verde);
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .ex-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--cinza-light);
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    color: var(--escuro);
+    background: var(--branco);
+    transition: border-color 0.2s;
+    outline: none;
+    margin-bottom: 12px;
+  }
+  .ex-input:focus { border-color: var(--verde); }
+  .ex-input.correct { border-color: var(--verde-mid); background: #f0fbf4; }
+  .ex-input.wrong { border-color: var(--vermelho); background: #fff5f5; }
+
+  .ex-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .ex-option {
+    padding: 12px 16px;
+    border: 2px solid var(--cinza-light);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--escuro);
+    background: var(--branco);
+    transition: all 0.15s;
+    text-align: left;
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ex-option:hover { border-color: var(--verde); background: var(--verde-light); }
+  .ex-option.selected { border-color: var(--verde); background: var(--verde-light); }
+  .ex-option.correct { border-color: var(--verde-mid); background: #e8f9ef; color: var(--verde); }
+  .ex-option.wrong { border-color: var(--vermelho); background: #fff0f0; color: var(--vermelho); }
+  .ex-option .opt-letter {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--creme-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* Match exercise */
+  .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .match-col { display: flex; flex-direction: column; gap: 8px; }
+  .match-item {
+    padding: 10px 14px;
+    border: 2px solid var(--cinza-light);
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--branco);
+    font-family: 'Outfit', sans-serif;
+  }
+  .match-item:hover { border-color: var(--verde); background: var(--verde-light); }
+  .match-item.selected { border-color: var(--dourado); background: var(--dourado-light); }
+  .match-item.matched { border-color: var(--verde-mid); background: #e8f9ef; opacity: 0.75; }
+
+  /* Flashcard */
+  .flashcard-wrap { perspective: 1000px; margin-bottom: 18px; }
+  .flashcard {
+    width: 100%;
+    min-height: 160px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    cursor: pointer;
+    border-radius: 14px;
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .flashcard-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 24px;
+    text-align: center;
+    border: 2px solid var(--cinza-light);
+    min-height: 160px;
+  }
+  .flashcard-front { background: var(--branco); }
+  .flashcard-back { background: var(--verde); transform: rotateY(180deg); border-color: var(--verde); }
+  .flashcard-word {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--escuro);
+    margin-bottom: 6px;
+  }
+  .flashcard-back .flashcard-word { color: white; }
+  .flashcard-sub { font-size: 13px; color: var(--cinza); }
+  .flashcard-back .flashcard-sub { color: rgba(255,255,255,0.75); }
+  .flashcard-example {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    font-style: italic;
+    margin-top: 10px;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.5;
+  }
+  .flashcard-tap { font-size: 11px; color: var(--cinza); margin-top: 8px; opacity: 0.6; }
+
+  /* Feedback box */
+  .feedback-box {
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    display: none;
+    line-height: 1.5;
+  }
+  .feedback-box.correct { background: #e8f9ef; border: 1px solid #7dd4a0; color: #1a5c35; }
+  .feedback-box.wrong { background: #fff0f0; border: 1px solid #f0a0a0; color: #8a1a1a; }
+  .feedback-box .feedback-label { font-weight: 600; margin-bottom: 4px; }
+  .feedback-box .feedback-detail { font-style: italic; }
+
+  /* Buttons */
+  .btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-primary { background: var(--verde); color: white; }
+  .btn-primary:hover { background: var(--verde-mid); transform: translateY(-1px); }
+  .btn-secondary { background: var(--cinza-light); color: var(--cinza); }
+  .btn-secondary:hover { background: var(--creme-dark); color: var(--escuro); }
+  .btn-row { display: flex; gap: 10px; }
+
+  /* Writing area */
+  .writing-prompt {
+    background: var(--creme);
+    border-left: 4px solid var(--dourado);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--escuro);
+    line-height: 1.6;
+  }
+  .writing-textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 14px 16px;
+    border: 2px solid var(--cinza-light);
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--escuro);
+    background: var(--branco);
+    resize: vertical;
+    outline: none;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .writing-textarea:focus { border-color: var(--verde); }
+  .word-count { font-size: 11px; color: var(--cinza); font-family: 'DM Mono', monospace; text-align: right; margin-bottom: 12px; }
+
+  /* Grammar reference */
+  .grammar-box {
+    background: #f0f7ff;
+    border: 1px solid #b8d4f0;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .grammar-box h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a4a80;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-family: 'DM Mono', monospace;
+  }
+  .grammar-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .grammar-table th, .grammar-table td { padding: 6px 10px; text-align: left; border-bottom: 1px solid #cde0f5; }
+  .grammar-table th { font-weight: 600; color: #1a4a80; background: #e0eeff; }
+  .grammar-table td { color: var(--escuro); }
+  .grammar-table td.form { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; }
+  .grammar-rule {
+    font-size: 14px;
+    color: var(--escuro);
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+  .grammar-example {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--verde);
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 4px 0;
+    border-left: 2px solid var(--verde);
+  }
+
+  /* Progress / home */
+  .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+  .stat-card {
+    background: var(--branco);
+    border: 1px solid var(--cinza-light);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--verde);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 12px; color: var(--cinza); }
+
+  /* Streak */
+  .streak-row { display: flex; gap: 6px; margin-bottom: 18px; }
+  .streak-day {
+    flex: 1;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    color: var(--cinza);
+    background: var(--cinza-light);
+  }
+  .streak-day.done { background: var(--verde); color: white; }
+  .streak-day.today { background: var(--dourado); color: white; }
+
+  /* Topic chips */
+  .topic-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .chip {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--cinza-light);
+    background: var(--branco);
+    color: var(--cinza);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .chip:hover, .chip.active { background: var(--verde); color: white; border-color: var(--verde); }
+
+  /* Complete banner */
+  .complete-banner {
+    background: linear-gradient(135deg, var(--verde) 0%, var(--verde-mid) 100%);
+    border-radius: 14px;
+    padding: 28px 24px;
+    text-align: center;
+    color: white;
+    margin-top: 8px;
+  }
+  .complete-banner .big { font-size: 42px; margin-bottom: 8px; }
+  .complete-banner h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 6px; }
+  .complete-banner p { font-size: 14px; opacity: 0.85; margin-bottom: 18px; }
+
+  /* Tooltip grammar note */
+  .grammar-note {
+    display: inline-block;
+    width: 16px; height: 16px;
+    background: var(--cinza-light);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    font-size: 10px;
+    cursor: help;
+    color: var(--cinza);
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .divider { height: 1px; background: var(--cinza-light); margin: 20px 0; }
+
+  .tag-b12 { display: inline-block; font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 20px; background: var(--dourado-light); color: #8a5a00; margin-left: 8px; vertical-align: middle; }
+  .tag-b2 { display: inline-block; font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 20px; background: #ffe0e8; color: #8a001a; margin-left: 8px; vertical-align: middle; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .ex-card { animation: fadeUp 0.25s ease; }
+  .complete-banner { animation: fadeUp 0.3s ease; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-logo">Português <span>em Foco</span></div>
+  <div class="header-badge">B1.2 → B2</div>
+  <div class="xp-pill">
+    <div class="xp-bar"><div class="xp-fill" id="xpBar" style="width:12%"></div></div>
+    <span id="xpLabel">120 XP</span>
+  </div>
+</header>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showPanel('home')" id="tab-home"><span class="icon">🏠</span> Início</button>
+  <button class="nav-btn" onclick="showPanel('lessons')" id="tab-lessons"><span class="icon">📖</span> Lições</button>
+  <button class="nav-btn" onclick="showPanel('grammar')" id="tab-grammar"><span class="icon">📐</span> Gramática</button>
+  <button class="nav-btn" onclick="showPanel('vocab')" id="tab-vocab"><span class="icon">🃏</span> Vocabulário</button>
+  <button class="nav-btn" onclick="showPanel('writing')" id="tab-writing"><span class="icon">✍️</span> Escrita</button>
+</nav>
+
+<main class="main">
+
+  <!-- ══════════════════════ HOME ══════════════════════ -->
+  <div class="panel active" id="panel-home">
+    <div class="section-title">Bom dia, Tomas! 👋</div>
+    <div class="section-sub">Continua a tua jornada — B1.2 em curso.</div>
+
+    <div class="progress-grid">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-xp">120</div>
+        <div class="stat-label">pontos XP</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-ex">7</div>
+        <div class="stat-label">exercícios feitos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-streak">3</div>
+        <div class="stat-label">dias seguidos 🔥</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">unidades planeadas</div>
+      </div>
+    </div>
+
+    <div class="section-sub" style="margin-bottom:8px; font-weight:500; color:var(--escuro);">Esta semana</div>
+    <div class="streak-row">
+      <div class="streak-day done">Seg</div>
+      <div class="streak-day done">Ter</div>
+      <div class="streak-day done">Qua</div>
+      <div class="streak-day today">Qui</div>
+      <div class="streak-day">Sex</div>
+      <div class="streak-day">Sáb</div>
+      <div class="streak-day">Dom</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-sub" style="margin-bottom:12px; font-weight:500; color:var(--escuro);">🎯 Onde estás agora</div>
+    <div class="card" style="border-left: 4px solid var(--dourado);">
+      <div class="card-header">
+        <div class="card-icon dourado">📌</div>
+        <div>
+          <div class="card-title">Unidade 1 — Navegar é preciso <span class="tag-b12">B1.2</span></div>
+          <div class="card-meta">Conjuntivo presente (revisão) · Conjuntivo futuro · Infinitivo pessoal avançado</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="showPanel('lessons')">Continuar →</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-sub" style="margin-bottom:12px; font-weight:500; color:var(--escuro);">🚀 Inicia um exercício rápido</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <button class="btn" style="background:var(--verde-light); color:var(--verde); border:1px solid var(--verde); font-size:14px;" onclick="startQuick('fill')">Preencher espaços</button>
+      <button class="btn" style="background:var(--dourado-light); color:var(--dourado); border:1px solid var(--dourado); font-size:14px;" onclick="startQuick('choice')">Escolha múltipla</button>
+      <button class="btn" style="background:#e8e0ff; color:#5a35a0; border:1px solid #c0a0f0; font-size:14px;" onclick="startQuick('flash')">Flashcards</button>
+      <button class="btn" style="background:#ffe0e8; color:#a02050; border:1px solid #f0a0b8; font-size:14px;" onclick="showPanel('writing')">Escrita livre</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ LESSONS ══════════════════════ -->
+  <div class="panel" id="panel-lessons">
+    <div class="section-title">Lições</div>
+    <div class="section-sub">Currículo adaptado do <em>Português em Foco 3</em> — B1.2 a B2</div>
+
+    <div class="unidade-grid">
+      <button class="unidade-item current" onclick="openLesson(1)">
+        <div class="unidade-num current">1</div>
+        <div class="unidade-info">
+          <div class="unidade-name">Navegar é preciso</div>
+          <div class="unidade-topics">Conjuntivo futuro · Infinitivo pessoal · Condicional simples</div>
+        </div>
+        <div class="unidade-level level-b12">B1.2</div>
+      </button>
+
+      <button class="unidade-item" onclick="openLesson(2)">
+        <div class="unidade-num upcoming">2</div>
+        <div class="unidade-info">
+          <div class="unidade-name">Entre o passado e o futuro</div>
+          <div class="unidade-topics">Imperfeito do conjuntivo · Condicionais com "se"</div>
+        </div>
+        <div class="unidade-level level-b12">B1.2</div>
+      </button>
+
+      <button class="unidade-item" onclick="openLesson(3)">
+        <div class="unidade-num upcoming">3</div>
+        <div class="unidade-info">
+          <div class="unidade-name">Sociedade em mudança</div>
+          <div class="unidade-topics">Mais-que-perfeito composto · Voz passiva avançada</div>
+        </div>
+        <div class="unidade-level level-b12">B1.2</div>
+      </button>
+
+      <button class="unidade-item" onclick="openLesson(4)">
+        <div class="unidade-num upcoming">4</div>
+        <div class="unidade-info">
+          <div class="unidade-name">Mundo digital</div>
+          <div class="unidade-topics">Orações relativas · Discurso indireto</div>
+        </div>
+        <div class="unidade-level level-b2">B2</div>
+      </button>
+
+      <button class="unidade-item" onclick="openLesson(5)">
+        <div class="unidade-num upcoming">5</div>
+        <div class="unidade-info">
+          <div class="unidade-name">Arte e cultura</div>
+          <div class="unidade-topics">Conjuntivo imperfeito avançado · Locuções conjuncionais</div>
+        </div>
+        <div class="unidade-level level-b2">B2</div>
+      </button>
+
+      <button class="unidade-item" onclick="openLesson(6)">
+        <div class="unidade-num upcoming">6</div>
+        <div class="unidade-info">
+          <div class="unidade-name">Trabalho e carreira</div>
+          <div class="unidade-topics">Condicional composto · Condicionais mistas</div>
+        </div>
+        <div class="unidade-level level-b2">B2</div>
+      </button>
+    </div>
+
+    <!-- Lesson 1 content (inline) -->
+    <div id="lesson-detail" style="display:none; margin-top:20px;">
+      <div class="divider"></div>
+      <div id="lesson-title" class="section-title" style="font-size:20px; margin-bottom:4px;"></div>
+      <div id="lesson-subtitle" class="section-sub"></div>
+
+      <div class="topic-chips" id="topic-chips"></div>
+
+      <div id="exercise-area"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ GRAMMAR ══════════════════════ -->
+  <div class="panel" id="panel-grammar">
+    <div class="section-title">Gramática</div>
+    <div class="section-sub">Referência rápida — B1.2 a B2. Toca para ver exemplos.</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon verde">🔮</div>
+        <div>
+          <div class="card-title">Futuro do Conjuntivo <span class="tag-b12">B1.2</span></div>
+          <div class="card-meta">Condições futuras · "quando", "se", "logo que"</div>
+        </div>
+      </div>
+      <div class="grammar-box">
+        <h4>Formação</h4>
+        <p class="grammar-rule">Parte da forma do <strong>Infinitivo Pessoal</strong> — para verbos regulares são idênticos. Para verbos irregulares, usas a raiz do Pretérito Perfeito.</p>
+        <table class="grammar-table">
+          <tr><th>Pronome</th><th>Falar</th><th>Ser</th><th>Ter</th></tr>
+          <tr><td>eu</td><td class="form">falar</td><td class="form">for</td><td class="form">tiver</td></tr>
+          <tr><td>tu</td><td class="form">falares</td><td class="form">fores</td><td class="form">tiveres</td></tr>
+          <tr><td>ele/ela</td><td class="form">falar</td><td class="form">for</td><td class="form">tiver</td></tr>
+          <tr><td>nós</td><td class="form">falarmos</td><td class="form">formos</td><td class="form">tivermos</td></tr>
+          <tr><td>eles/elas</td><td class="form">falarem</td><td class="form">forem</td><td class="form">tiverem</td></tr>
+        </table>
+      </div>
+      <div class="grammar-example">Quando <strong>fores</strong> a Lisboa, liga-me.</div>
+      <div class="grammar-example">Se <strong>tiveres</strong> tempo, vem cá a casa.</div>
+      <div class="grammar-example">Logo que ele <strong>chegar</strong>, começamos a reunião.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon dourado">🌀</div>
+        <div>
+          <div class="card-title">Imperfeito do Conjuntivo <span class="tag-b12">B1.2</span></div>
+          <div class="card-meta">Hipóteses · "se + imperfeito → condicional"</div>
+        </div>
+      </div>
+      <div class="grammar-box">
+        <h4>Formação: Pretérito Perfeito 3ª pl. → -am + terminações</h4>
+        <table class="grammar-table">
+          <tr><th>Pronome</th><th>Falar</th><th>Ser/Ir</th><th>Ter</th></tr>
+          <tr><td>eu</td><td class="form">falasse</td><td class="form">fosse</td><td class="form">tivesse</td></tr>
+          <tr><td>tu</td><td class="form">falasses</td><td class="form">fosses</td><td class="form">tivesses</td></tr>
+          <tr><td>ele/ela</td><td class="form">falasse</td><td class="form">fosse</td><td class="form">tivesse</td></tr>
+          <tr><td>nós</td><td class="form">falássemos</td><td class="form">fôssemos</td><td class="form">tivéssemos</td></tr>
+          <tr><td>eles/elas</td><td class="form">falassem</td><td class="form">fossem</td><td class="form">tivessem</td></tr>
+        </table>
+      </div>
+      <div class="grammar-example">Se eu <strong>fosse</strong> rico, viajava pelo mundo.</div>
+      <div class="grammar-example">Oxalá ele <strong>tivesse</strong> mais paciência!</div>
+      <div class="grammar-example">Gostava que <strong>viesses</strong> jantar connosco.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon verde">🔗</div>
+        <div>
+          <div class="card-title">Condicional <span class="tag-b12">B1.2</span></div>
+          <div class="card-meta">Hipóteses · "Se + imperfeito → condicional"</div>
+        </div>
+      </div>
+      <div class="grammar-box">
+        <h4>Formação: Infinitivo + -ia, -ias, -ia, -íamos, -iam</h4>
+        <table class="grammar-table">
+          <tr><th>Pronome</th><th>Falar</th><th>Ter</th><th>Pôr</th></tr>
+          <tr><td>eu</td><td class="form">falaria</td><td class="form">teria</td><td class="form">poria</td></tr>
+          <tr><td>tu</td><td class="form">falarias</td><td class="form">terias</td><td class="form">porias</td></tr>
+          <tr><td>nós</td><td class="form">falaríamos</td><td class="form">teríamos</td><td class="form">poríamos</td></tr>
+          <tr><td>eles</td><td class="form">falariam</td><td class="form">teriam</td><td class="form">poriam</td></tr>
+        </table>
+      </div>
+      <div class="grammar-example">Se <strong>pudesse</strong>, <strong>viveria</strong> em Lisboa.</div>
+      <div class="grammar-example"><strong>Gostaria</strong> de aprender mais línguas.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon dourado">⚙️</div>
+        <div>
+          <div class="card-title">Infinitivo Pessoal vs Conjuntivo <span class="tag-b12">B1.2</span></div>
+          <div class="card-meta">Quando usar cada um</div>
+        </div>
+      </div>
+      <div class="grammar-box">
+        <h4>Regra principal</h4>
+        <p class="grammar-rule">Com <strong>ser + adjetivo</strong>: podes usar <em>que + conjuntivo</em> <strong>ou</strong> <em>infinitivo pessoal</em> (sem "que").</p>
+        <p class="grammar-rule">Para dúvida/probabilidade: prefere <em>que + conjuntivo</em>.</p>
+      </div>
+      <div class="grammar-example">É importante <strong>ficares</strong> em casa. = É importante que <strong>fiques</strong> em casa.</div>
+      <div class="grammar-example">É provável que <strong>chova</strong> amanhã. ✓ (conjuntivo — não infinitivo pessoal)</div>
+      <div class="grammar-example">É bom <strong>comermos</strong> bem. = É bom que <strong>comamos</strong> bem.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon verde">📝</div>
+        <div>
+          <div class="card-title">Voz Passiva <span class="tag-b2">B2</span></div>
+          <div class="card-meta">Ser + Particípio · Passiva reflexa com "se"</div>
+        </div>
+      </div>
+      <div class="grammar-box">
+        <h4>Passiva com ser</h4>
+        <p class="grammar-rule">Sujeito + ser (conjugado) + particípio passado (concorda com sujeito)</p>
+      </div>
+      <div class="grammar-example">O livro <strong>foi escrito</strong> por Saramago.</div>
+      <div class="grammar-example">As casas <strong>foram construídas</strong> no século XIX.</div>
+      <div class="grammar-box" style="margin-top:10px;">
+        <h4>Passiva reflexa</h4>
+        <p class="grammar-rule">Usa-se "se" com o verbo na 3ª pessoa (singular ou plural).</p>
+      </div>
+      <div class="grammar-example"><strong>Vende-se</strong> casa. / <strong>Vendem-se</strong> casas.</div>
+      <div class="grammar-example"><strong>Fala-se</strong> português em muitos países.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ VOCABULARY ══════════════════════ -->
+  <div class="panel" id="panel-vocab">
+    <div class="section-title">Vocabulário</div>
+    <div class="section-sub">Flashcards da Unidade 1 — toca para virar o cartão.</div>
+
+    <div class="flashcard-wrap" id="flashcardWrap" onclick="flipCard()">
+      <div class="flashcard" id="flashcard">
+        <div class="flashcard-face flashcard-front">
+          <div class="flashcard-word" id="fc-word">envidar esforços</div>
+          <div class="flashcard-sub" id="fc-type">expressão · verbo + nome</div>
+          <div class="flashcard-tap">toca para ver a definição →</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="flashcard-word" id="fc-def">fazer os possíveis</div>
+          <div class="flashcard-sub" id="fc-sub-back">fazer tudo o que é necessário para atingir um objetivo</div>
+          <div class="flashcard-example" id="fc-example">Devemos envidar esforços para aprender português.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-bottom:18px;">
+      <button class="btn btn-secondary" onclick="prevCard()" style="flex:1;">← Anterior</button>
+      <span style="display:flex; align-items:center; font-size:13px; font-family:'DM Mono',monospace; color:var(--cinza);" id="cardCounter">1 / 12</span>
+      <button class="btn btn-primary" onclick="nextCard()" style="flex:1;">Próximo →</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-sub" style="font-weight:500; color:var(--escuro); margin-bottom:12px;">🎯 Teste rápido de vocabulário</div>
+    <div id="vocab-quiz-area">
+      <button class="btn btn-primary" onclick="startVocabQuiz()" style="width:100%;">Começar teste de 5 palavras</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ WRITING ══════════════════════ -->
+  <div class="panel" id="panel-writing">
+    <div class="section-title">Escrita</div>
+    <div class="section-sub">Pratica a expressão escrita — corrijo tudo quando terminares.</div>
+
+    <div style="margin-bottom:14px;">
+      <div style="font-size:13px; font-weight:500; color:var(--escuro); margin-bottom:8px;">Escolhe um tema:</div>
+      <div class="topic-chips">
+        <div class="chip active" onclick="setWritingPrompt(0, this)">A língua portuguesa</div>
+        <div class="chip" onclick="setWritingPrompt(1, this)">Se fosse invisível...</div>
+        <div class="chip" onclick="setWritingPrompt(2, this)">O meu país ideal</div>
+        <div class="chip" onclick="setWritingPrompt(3, this)">Tecnologia e sociedade</div>
+        <div class="chip" onclick="setWritingPrompt(4, this)">Livre</div>
+      </div>
+    </div>
+
+    <div class="writing-prompt" id="writing-prompt-box">
+      "A língua é o primeiro elemento da alma de um povo." (Gilberto Gil) — Escreve um texto de 120–150 palavras sobre a importância da língua portuguesa no mundo.
+    </div>
+
+    <textarea class="writing-textarea" id="writing-text" placeholder="Escreve aqui o teu texto em português europeu..." oninput="updateWordCount()"></textarea>
+    <div class="word-count" id="word-count">0 palavras</div>
+
+    <div class="btn-row" style="margin-bottom:18px;">
+      <button class="btn btn-primary" onclick="submitWriting()" style="flex:1;">Enviar para correção ✓</button>
+      <button class="btn btn-secondary" onclick="clearWriting()">Limpar</button>
+    </div>
+
+    <div id="writing-feedback" style="display:none;"></div>
+
+    <div class="divider"></div>
+    <div style="font-size:13px; color:var(--cinza); line-height:1.6;">
+      <strong style="color:var(--escuro);">💡 Dica:</strong> Usa estas estruturas para mostrar nível B1.2/B2:<br>
+      <em>É fundamental que... · Quando + futuro conjuntivo · Se + imperfeito conjuntivo + condicional · Embora + conjuntivo · Apesar de + infinitivo pessoal</em>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ──────────────────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────────────────
+let xp = 120;
+let exercisesDone = 7;
+let currentPanel = 'home';
+let currentCard = 0;
+let currentExercise = 0;
+let exercises = [];
+let score = 0;
+
+// ──────────────────────────────────────────────────────────
+// FLASHCARDS DATA
+// ──────────────────────────────────────────────────────────
+const flashcards = [
+  { word: 'envidar esforços', type: 'expressão', def: 'fazer os possíveis', sub: 'trabalhar muito para atingir um objetivo', ex: 'Devemos envidar esforços para preservar a língua.' },
+  { word: 'convicção generalizada', type: 'nome + adjetivo', def: 'crença comum', sub: 'opinião partilhada pela maioria das pessoas', ex: 'É uma convicção generalizada que o português vai crescer.' },
+  { word: 'disperso/a', type: 'adjetivo', def: 'espalhado', sub: 'distribuído por vários lugares', ex: 'A comunidade lusófona está dispersa pelo mundo.' },
+  { word: 'obscuro/a', type: 'adjetivo', def: 'pouco claro/a', sub: 'difícil de compreender ou de ver', ex: 'O significado desta expressão é um pouco obscuro.' },
+  { word: 'cimentar', type: 'verbo', def: 'consolidar, fortalecer', sub: 'tornar sólido e duradouro', ex: 'Portugal quer cimentar o seu património linguístico.' },
+  { word: 'constatar', type: 'verbo', def: 'verificar, observar', sub: 'reconhecer que algo é verdade após verificação', ex: 'Podemos constatar que o português é global.' },
+  { word: 'imprescindível', type: 'adjetivo', def: 'essencial, indispensável', sub: 'absolutamente necessário', ex: 'É imprescindível que os governos apoiem a língua.' },
+  { word: 'estrito/a', type: 'adjetivo', def: 'rigoroso/a, severo/a', sub: 'que não admite exceções', ex: 'As regras são muito estritas.' },
+  { word: 'acrescido/a', type: 'adjetivo', def: 'aumentado/a, adicional', sub: 'com algo mais a juntar', ex: 'O conhecimento de línguas tem valor acrescido.' },
+  { word: 'integrar', type: 'verbo', def: 'incluir, fazer parte de', sub: 'incorporar num conjunto maior', ex: 'Portugal integra a União Europeia.' },
+  { word: 'predestinar', type: 'verbo', def: 'destinar antecipadamente', sub: 'estar destinado a algo desde o início', ex: 'Pessoa predestinou o português ao século XXI.' },
+  { word: 'lusófono/a', type: 'adjetivo', def: 'que fala português', sub: 'relativo à comunidade de língua portuguesa', ex: 'Os países lusófonos são muito diversos.' }
+];
+
+// ──────────────────────────────────────────────────────────
+// EXERCISES DATA — B1.2 calibrated, from class materials
+// ──────────────────────────────────────────────────────────
+const allExercises = {
+  fill: [
+    {
+      type: 'fill',
+      question: 'Completa com o Futuro do Conjuntivo ou Infinitivo Pessoal:',
+      sentence: 'Quando _____ (chegar) a Madrid, ligo-te.',
+      answer: 'chegares',
+      hint: 'Usa o Futuro do Conjuntivo com "quando" para ações futuras.',
+      feedback: 'Com "quando" + referência futura, usa-se sempre o Futuro do Conjuntivo. Chegar → chegares (tu).'
+    },
+    {
+      type: 'fill',
+      question: 'Completa com o Futuro do Conjuntivo:',
+      sentence: 'Se eles _____ (ter) tempo, vêm ao jantar.',
+      answer: 'tiverem',
+      hint: '"Ter" é irregular no Futuro do Conjuntivo.',
+      feedback: '"Ter" → tiveram (Pret. Perf.) → tiverem (Fut. Conj.). Irregular!'
+    },
+    {
+      type: 'fill',
+      question: 'Futuro do Conjuntivo ou Infinitivo Pessoal?',
+      sentence: 'É bom elas _____ (ficar) em casa hoje.',
+      answer: 'ficarem',
+      hint: 'Ser + adjetivo + infinitivo pessoal (sem "que").',
+      feedback: 'Sem "que", usas o Infinitivo Pessoal: ficarem. (= é bom que elas fiquem)'
+    },
+    {
+      type: 'fill',
+      question: 'Completa com o Imperfeito do Conjuntivo:',
+      sentence: 'Se eu _____ (ser) presidente, mudava muitas coisas.',
+      answer: 'fosse',
+      hint: '"Ser" e "Ir" partilham as mesmas formas no Imperfeito do Conjuntivo.',
+      feedback: 'Ser/Ir: fosse, fosses, fosse, fôssemos, fossem. Condição hipotética → Imperfeito Conj.'
+    },
+    {
+      type: 'fill',
+      question: 'Completa com o Condicional:',
+      sentence: 'Se _____ (poder), vivia em Lisboa.',
+      answer: 'pudesse',
+      hint: 'A condição hipotética pede Imperfeito do Conjuntivo, a consequência pede Condicional ou Imperfeito.',
+      feedback: '"Poder" → puderam → pudesse (Imp. Conj.). Estrutura: Se + Imp.Conj. + Condicional/Imperfeito.'
+    },
+    {
+      type: 'fill',
+      question: 'Completa com a preposição correta:',
+      sentence: 'O Pedro preocupa-se muito _____ os resultados dos exames.',
+      answer: 'com',
+      hint: 'Preocupar-se + nome/pronome = preposição "com".',
+      feedback: 'Preocupar-se COM + nome/pronome. Preocupar-se EM + verbo. Ex: preocupa-se em estudar.'
+    },
+    {
+      type: 'fill',
+      question: 'Completa com a preposição:',
+      sentence: 'Ela sonha _____ tornar-se escritora.',
+      answer: 'em',
+      hint: 'Sonhar + verbo = preposição "em".',
+      feedback: 'Sonhar EM + verbo infinitivo. Sonhar COM + nome/pronome. Ex: sonho com o mar.'
+    }
+  ],
+  choice: [
+    {
+      type: 'choice',
+      question: 'Qual a forma correta do Futuro do Conjuntivo?',
+      sentence: 'Logo que ele _____, avisa-me.',
+      options: ['chega', 'chegue', 'chegar', 'chegaria'],
+      answer: 2,
+      feedback: '"Logo que" + referência futura exige sempre o Futuro do Conjuntivo: "chegar". Não o Presente do Conjuntivo!'
+    },
+    {
+      type: 'choice',
+      question: 'Indicativo ou Conjuntivo?',
+      sentence: 'É claro que eles _____ razão.',
+      options: ['tenham', 'têm', 'tivessem', 'teriam'],
+      answer: 1,
+      feedback: '"É claro que" + facto/certeza → Indicativo. "Têm" ✓. Se fosse negativo (não é claro que...) → Conjuntivo.'
+    },
+    {
+      type: 'choice',
+      question: 'Seleciona a frase correta:',
+      sentence: 'Hipótese improvável no passado:',
+      options: [
+        'Se teria dinheiro, comprava uma casa.',
+        'Se tivesse dinheiro, compraria uma casa.',
+        'Se tenha dinheiro, compraria uma casa.',
+        'Se tinha dinheiro, teria comprado uma casa.'
+      ],
+      answer: 1,
+      feedback: 'Condição hipotética: Se + Imperfeito do Conjuntivo (tivesse) + Condicional (compraria). ✓'
+    },
+    {
+      type: 'choice',
+      question: 'Talvez ou Provavelmente?',
+      sentence: '_____ ela já saiu — vi a luz apagada.',
+      options: ['Talvez + Conjuntivo', 'Provavelmente + Indicativo', 'Se calhar + Conjuntivo', 'Oxalá + Indicativo'],
+      answer: 1,
+      feedback: '"Provavelmente" + Indicativo ✓. "Talvez" + Conjuntivo. "Se calhar" + Indicativo. "Oxalá" + Conjuntivo.'
+    },
+    {
+      type: 'choice',
+      question: 'Escolhe a opção equivalente:',
+      sentence: '"É importante que tu fiques em casa." →',
+      options: [
+        'É importante ficares em casa.',
+        'É importante ficar em casa.',
+        'É importante tu fica em casa.',
+        'É importante que ficar em casa.'
+      ],
+      answer: 0,
+      feedback: 'Ser + adj. + que + Conjuntivo = Ser + adj. + Infinitivo Pessoal (com sujeito expresso). "ficares" ✓'
+    }
+  ],
+  match: [
+    {
+      type: 'match',
+      question: 'Faz a correspondência entre as expressões e os sinónimos:',
+      pairs: [
+        { left: 'envidar esforços', right: 'fazer os possíveis' },
+        { left: 'convicção generalizada', right: 'crença comum' },
+        { left: 'interação', right: 'relacionamento mútuo' },
+        { left: 'obscura', right: 'pouco clara' },
+        { left: 'disperso', right: 'espalhado' }
+      ]
+    }
+  ]
+};
+
+// ──────────────────────────────────────────────────────────
+// WRITING PROMPTS
+// ──────────────────────────────────────────────────────────
+const writingPrompts = [
+  '"A língua é o primeiro elemento da alma de um povo." (Gilberto Gil) — Escreve um texto de 120–150 palavras sobre a importância da língua portuguesa no mundo.',
+  'Se fosses invisível por um dia, o que farias? Descreve esse dia em 120–150 palavras. Usa o Imperfeito do Conjuntivo e o Condicional.',
+  'Como seria o teu país ideal? Descreve as suas características em 120–150 palavras, usando estruturas como "seria fundamental que...", "gostaria que...".',
+  'A tecnologia mudou a forma como nos comunicamos. Escreve um texto de 120–150 palavras sobre as vantagens e desvantagens desta mudança.',
+  'Tema livre — escreve sobre qualquer assunto que te interesse, usando pelo menos 3 estruturas gramaticais de B1.2.'
+];
+
+// ──────────────────────────────────────────────────────────
+// NAV
+// ──────────────────────────────────────────────────────────
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  currentPanel = name;
+  if (name === 'lessons') {
+    document.getElementById('lesson-detail').style.display = 'none';
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// LESSONS
+// ──────────────────────────────────────────────────────────
+function openLesson(num) {
+  const detail = document.getElementById('lesson-detail');
+  const title = document.getElementById('lesson-title');
+  const sub = document.getElementById('lesson-subtitle');
+  const chips = document.getElementById('topic-chips');
+
+  const lessons = [
+    { name: 'Navegar é preciso', sub: 'B1.2 · Unidade 1 do Português em Foco 3', topics: ['Futuro do Conjuntivo', 'Imperfeito do Conjuntivo', 'Condicional', 'Infinitivo Pessoal', 'Verbo + preposição'], type: 'fill' },
+    { name: 'Entre o passado e o futuro', sub: 'B1.2 · Unidade 2', topics: ['Imperfeito do Conjuntivo', 'Condicionais com "se"', 'Mais-que-perfeito'], type: 'choice' },
+    { name: 'Sociedade em mudança', sub: 'B1.2/B2 · Unidade 3', topics: ['Mais-que-perfeito composto', 'Voz passiva avançada', 'Orações relativas'], type: 'fill' },
+  ];
+
+  const lesson = lessons[num - 1] || lessons[0];
+  title.textContent = lesson.name;
+  sub.textContent = lesson.sub;
+  chips.innerHTML = lesson.topics.map(t => `<div class="chip active">${t}</div>`).join('');
+
+  detail.style.display = 'block';
+  detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  startExercises(lesson.type || 'fill');
+}
+
+// ──────────────────────────────────────────────────────────
+// EXERCISE ENGINE
+// ──────────────────────────────────────────────────────────
+function startQuick(type) {
+  showPanel('lessons');
+  document.getElementById('lesson-detail').style.display = 'block';
+  document.getElementById('lesson-title').textContent = type === 'flash' ? 'Flashcards' : 'Exercício rápido';
+  document.getElementById('lesson-subtitle').textContent = 'Sessão rápida de prática';
+  document.getElementById('topic-chips').innerHTML = '';
+  if (type === 'flash') {
+    showPanel('vocab');
+    return;
+  }
+  setTimeout(() => startExercises(type), 100);
+}
+
+function startExercises(type) {
+  if (type === 'fill') exercises = [...allExercises.fill];
+  else if (type === 'choice') exercises = [...allExercises.choice];
+  else exercises = [...allExercises.fill, ...allExercises.choice].slice(0, 5);
+
+  exercises = exercises.sort(() => Math.random() - 0.5).slice(0, 5);
+  currentExercise = 0;
+  score = 0;
+  renderExercise();
+}
+
+function renderExercise() {
+  const area = document.getElementById('exercise-area');
+  if (!area) return;
+
+  if (currentExercise >= exercises.length) {
+    showCompletion(area);
+    return;
+  }
+
+  const ex = exercises[currentExercise];
+  const pct = Math.round((currentExercise / exercises.length) * 100);
+
+  let html = `
+    <div class="ex-progress">
+      <div class="ex-progress-bar"><div class="ex-progress-fill" style="width:${pct}%"></div></div>
+      <div class="ex-counter">${currentExercise + 1} / ${exercises.length}</div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-type-tag">${ex.type === 'fill' ? 'Preencher espaço' : 'Escolha múltipla'}</div>
+      <div class="ex-question">${ex.question}</div>`;
+
+  if (ex.sentence) {
+    html += `<div class="ex-sentence">${ex.sentence.replace('_____', '<span style="color:var(--verde);font-weight:600;border-bottom:2px solid var(--verde); padding:0 4px;">_____</span>')}</div>`;
+  }
+
+  if (ex.hint) {
+    html += `<div class="ex-hint">💡 ${ex.hint}</div>`;
+  }
+
+  if (ex.type === 'fill') {
+    html += `<input class="ex-input" id="ex-input" type="text" placeholder="Escreve a forma correta..." autocomplete="off" autocorrect="off" spellcheck="false">`;
+  } else if (ex.type === 'choice') {
+    html += `<div class="ex-options">`;
+    ex.options.forEach((opt, i) => {
+      html += `<button class="ex-option" onclick="selectOption(${i})" id="opt-${i}"><span class="opt-letter">${'ABCD'[i]}</span> ${opt}</button>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `
+      <div class="feedback-box" id="feedback-box"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="check-btn" onclick="${ex.type === 'fill' ? 'checkFill()' : ''}" style="${ex.type === 'choice' ? 'display:none' : ''}">Verificar</button>
+        <button class="btn btn-secondary" id="next-btn" onclick="nextExercise()" style="display:none;">Próximo →</button>
+      </div>
+    </div>`;
+
+  area.innerHTML = html;
+
+  if (ex.type === 'fill') {
+    const input = document.getElementById('ex-input');
+    if (input) {
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') checkFill(); });
+      input.focus();
+    }
+  }
+}
+
+function selectOption(idx) {
+  const ex = exercises[currentExercise];
+  document.querySelectorAll('.ex-option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('opt-' + idx).classList.add('selected');
+
+  const correct = idx === ex.answer;
+  showFeedback(correct, ex.options[ex.answer], ex.feedback);
+
+  document.querySelectorAll('.ex-option').forEach((o, i) => {
+    if (i === ex.answer) o.classList.add('correct');
+    else if (i === idx && !correct) o.classList.add('wrong');
+  });
+
+  if (correct) {
+    addXP(15);
+    score++;
+  }
+  document.getElementById('next-btn').style.display = 'block';
+}
+
+function checkFill() {
+  const ex = exercises[currentExercise];
+  const input = document.getElementById('ex-input');
+  if (!input) return;
+  const val = input.value.trim().toLowerCase();
+  const ans = ex.answer.toLowerCase();
+  const correct = val === ans || val === ans.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  input.classList.add(correct ? 'correct' : 'wrong');
+  showFeedback(correct, ex.answer, ex.feedback);
+  document.getElementById('check-btn').style.display = 'none';
+  document.getElementById('next-btn').style.display = 'block';
+
+  if (correct) { addXP(20); score++; }
+}
+
+function showFeedback(correct, answer, detail) {
+  const box = document.getElementById('feedback-box');
+  box.className = 'feedback-box ' + (correct ? 'correct' : 'wrong');
+  box.style.display = 'block';
+  box.innerHTML = `<div class="feedback-label">${correct ? '✓ Correto!' : '✗ Não é bem assim...'}</div>
+    ${!correct ? `<div>Resposta correta: <strong>${answer}</strong></div>` : ''}
+    <div class="feedback-detail">${detail || ''}</div>`;
+}
+
+function nextExercise() {
+  currentExercise++;
+  exercisesDone++;
+  document.getElementById('stat-ex').textContent = exercisesDone;
+  renderExercise();
+}
+
+function showCompletion(area) {
+  const pct = Math.round((score / exercises.length) * 100);
+  const emoji = pct >= 80 ? '🎉' : pct >= 50 ? '👍' : '💪';
+  area.innerHTML = `
+    <div class="complete-banner">
+      <div class="big">${emoji}</div>
+      <h3>Sessão completa!</h3>
+      <p>${score} de ${exercises.length} corretas · ${pct}% de acerto</p>
+      <button class="btn" style="background:white; color:var(--verde); font-weight:600;" onclick="startExercises('fill')">Praticar mais ↺</button>
+    </div>`;
+}
+
+// ──────────────────────────────────────────────────────────
+// FLASHCARDS
+// ──────────────────────────────────────────────────────────
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+}
+
+function updateCard() {
+  const c = flashcards[currentCard];
+  document.getElementById('fc-word').textContent = c.word;
+  document.getElementById('fc-type').textContent = c.type;
+  document.getElementById('fc-def').textContent = c.def;
+  document.getElementById('fc-sub-back').textContent = c.sub;
+  document.getElementById('fc-example').textContent = c.ex;
+  document.getElementById('cardCounter').textContent = `${currentCard + 1} / ${flashcards.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+
+function nextCard() {
+  currentCard = (currentCard + 1) % flashcards.length;
+  updateCard();
+}
+
+function prevCard() {
+  currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
+  updateCard();
+}
+
+// ──────────────────────────────────────────────────────────
+// VOCAB QUIZ
+// ──────────────────────────────────────────────────────────
+function startVocabQuiz() {
+  const area = document.getElementById('vocab-quiz-area');
+  const sample = flashcards.sort(() => Math.random() - 0.5).slice(0, 5);
+  let current = 0;
+  let qScore = 0;
+
+  function renderQ() {
+    if (current >= sample.length) {
+      area.innerHTML = `<div class="complete-banner"><div class="big">🃏</div><h3>Vocabulário testado!</h3><p>${qScore}/5 corretas</p><button class="btn" style="background:white;color:var(--verde);font-weight:600;" onclick="startVocabQuiz()">Repetir</button></div>`;
+      return;
+    }
+    const card = sample[current];
+    const options = [card.def, ...flashcards.filter(f => f !== card).sort(() => Math.random() - 0.5).slice(0, 3).map(f => f.def)].sort(() => Math.random() - 0.5);
+    const correct = options.indexOf(card.def);
+
+    area.innerHTML = `
+      <div class="ex-card">
+        <div class="ex-type-tag">Vocabulário ${current + 1}/5</div>
+        <div class="ex-question">Qual é o significado de:</div>
+        <div class="ex-sentence" style="font-size:22px; text-align:center;">${card.word}</div>
+        <div class="ex-options">${options.map((o, i) => `<button class="ex-option" onclick="pickVocab(${i},${correct},this,${current},${qScore})" id="vopt-${i}"><span class="opt-letter">${'ABCD'[i]}</span> ${o}</button>`).join('')}</div>
+        <div class="feedback-box" id="vfeedback"></div>
+        <button class="btn btn-primary" id="vnext" style="display:none;width:100%;margin-top:8px;" onclick="">Próxima →</button>
+      </div>`;
+  }
+
+  window.pickVocab = function(idx, correct, el, cur, sc) {
+    const isCorrect = idx === correct;
+    document.querySelectorAll('.ex-option').forEach((o, i) => {
+      if (i === correct) o.classList.add('correct');
+      else if (i === idx && !isCorrect) o.classList.add('wrong');
+    });
+    const fb = document.getElementById('vfeedback');
+    fb.className = 'feedback-box ' + (isCorrect ? 'correct' : 'wrong');
+    fb.style.display = 'block';
+    fb.innerHTML = `<div class="feedback-label">${isCorrect ? '✓ Correto!' : '✗ Errado'}</div><div class="feedback-detail">${sample[cur].word} = ${sample[cur].def}</div>`;
+    if (isCorrect) { addXP(10); qScore++; }
+    const btn = document.getElementById('vnext');
+    btn.style.display = 'block';
+    btn.onclick = () => { current++; renderQ(); };
+  };
+
+  renderQ();
+}
+
+// ──────────────────────────────────────────────────────────
+// WRITING
+// ──────────────────────────────────────────────────────────
+function setWritingPrompt(idx, el) {
+  document.querySelectorAll('.topic-chips .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('writing-prompt-box').textContent = writingPrompts[idx];
+}
+
+function updateWordCount() {
+  const text = document.getElementById('writing-text').value.trim();
+  const words = text ? text.split(/\s+/).length : 0;
+  document.getElementById('word-count').textContent = `${words} palavra${words !== 1 ? 's' : ''}`;
+}
+
+function clearWriting() {
+  document.getElementById('writing-text').value = '';
+  document.getElementById('word-count').textContent = '0 palavras';
+  document.getElementById('writing-feedback').style.display = 'none';
+}
+
+async function submitWriting() {
+  const text = document.getElementById('writing-text').value.trim();
+  const prompt = document.getElementById('writing-prompt-box').textContent;
+  if (text.length < 20) {
+    alert('Escreve um texto mais longo antes de enviar!');
+    return;
+  }
+
+  const fb = document.getElementById('writing-feedback');
+  fb.style.display = 'block';
+  fb.innerHTML = `<div class="card" style="border-left:4px solid var(--dourado);">
+    <div style="color:var(--cinza); font-size:14px;">⏳ A corrigir o teu texto...</div>
+  </div>`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `És um professor de Português Europeu (não Brasileiro) especializado em níveis B1.2 e B2. O aluno chama-se Tomas. 
+        
+Corrige o texto do aluno de forma construtiva e encorajadora. Usa sempre Português Europeu nas tuas correções e explicações.
+
+Estrutura a tua resposta assim:
+1. **Apreciação geral** (1-2 frases positivas)
+2. **Erros a corrigir** (máximo 4, com explicação gramatical clara, em formato: ❌ errado → ✓ correto — explicação)
+3. **Estruturas bem usadas** (destaca 2-3 coisas que ficaram bem)
+4. **Sugestão** (uma frase que podias usar para elevar o nível para B2)
+
+Sê direto mas encorajador. Mantém as explicações em Português Europeu.`,
+        messages: [{
+          role: 'user',
+          content: `Tema: ${prompt}\n\nTexto do Tomas:\n${text}`
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const correction = data.content?.[0]?.text || 'Não foi possível obter a correção.';
+
+    fb.innerHTML = `<div class="card" style="border-left:4px solid var(--verde);">
+      <div style="font-size:13px; font-family:'DM Mono',monospace; color:var(--verde); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">✓ Correção do Professor</div>
+      <div style="font-size:14px; line-height:1.8; white-space:pre-wrap; color:var(--escuro);">${correction}</div>
+      <div style="margin-top:14px;">
+        <button class="btn btn-secondary" onclick="clearWriting()" style="font-size:13px;">Novo texto</button>
+      </div>
+    </div>`;
+
+    addXP(30);
+  } catch (e) {
+    fb.innerHTML = `<div class="card"><div style="color:var(--cinza); font-size:14px;">Não foi possível ligar ao serviço de correção. Verifica a tua ligação.</div></div>`;
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// XP
+// ──────────────────────────────────────────────────────────
+function addXP(amount) {
+  xp += amount;
+  document.getElementById('xpLabel').textContent = xp + ' XP';
+  document.getElementById('stat-xp').textContent = xp;
+  const pct = Math.min(100, ((xp % 500) / 500) * 100);
+  document.getElementById('xpBar').style.width = pct + '%';
+}
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(r => console.log("SW registered"))
+      .catch(e => console.log("SW error", e));
+  });
+}
+</script>
+</body>
+</html>

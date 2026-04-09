@@ -1,0 +1,26 @@
+{
+  "name": "Português em Foco",
+  "short_name": "PT Foco",
+  "description": "Curso pessoal de Português Europeu — B1.2 a B2",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f8f5f0",
+  "theme_color": "#0e5c35",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education"],
+  "lang": "pt-PT"
+}
